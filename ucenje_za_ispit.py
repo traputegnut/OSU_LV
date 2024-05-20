@@ -253,3 +253,19 @@ disp = ConfusionMatrixDisplay(confusion_matrix=cm)
 disp.plot()
 plt.show()
 # izvrši predikciju mreže
+
+
+
+
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+
+# Učitavanje Iris dataset-a
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# a) Prikaži odnos duljine latice i čašice za Virginicu (zelenom bojom) i Setosu (sivom bojom)
+virginica = X[y == 2]
+setosa = X[y == 0]
+
