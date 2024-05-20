@@ -202,3 +202,54 @@ img=np.vstack([first,second])
 plt.figure()
 plt.imshow(img,cmap="gray")
 plt.show()
+
+
+
+
+
+
+#LV8-------------------------------------------------------------
+# učitavanje podataka:
+data_df = pd.DataFrame(data, columns=['num_pregnant', 'plasma', 'blood_pressure',
+                       'triceps', 'insulin', 'BMI', 'diabetes_function', 'age', 'diabetes']) #koriste se ocisceni podaci za dataframe
+X = data_df.drop(columns=['diabetes']).to_numpy()
+y = data_df['diabetes'].copy().to_numpy()
+
+# train test split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=5)
+
+# a)
+model = keras.Sequential()
+model.add(layers.Input(shape=(8,)))
+model.add(layers.Dense(units=12, activation="relu"))
+model.add(layers.Dense(units=8, activation="relu"))
+model.add(layers.Dense(units=1, activation="sigmoid"))
+model.summary()
+
+# b)
+model.compile(loss="binary_crossentropy",
+              optimizer="adam", metrics=["accuracy", ])
+
+# c)
+history = model.fit(X_train, y_train, batch_size=10,
+                    epochs=150, validation_split=0.1)
+
+
+# d)
+model.save('Model/')
+
+# e)
+model = load_model('Model/')
+score = model.evaluate(X_test, y_test, verbose=0)
+for i in range(len(model.metrics_names)):
+    print(f'{model.metrics_names[i]} = {score[i]}')
+
+# f)
+y_predictions = model.predict(X_test)
+y_predictions = np.around(y_predictions).astype(np.int32)
+cm = confusion_matrix(y_test, y_predictions)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+disp.plot()
+plt.show()
+# komentar u pdfu
