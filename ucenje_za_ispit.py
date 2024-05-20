@@ -252,4 +252,4 @@ cm = confusion_matrix(y_test, y_predictions)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm)
 disp.plot()
 plt.show()
-# komentar u pdfu
+# izvrši predikciju mreže
