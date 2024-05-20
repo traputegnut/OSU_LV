@@ -92,3 +92,65 @@ df.agg('mean')[['CO2 emissions (g/km)']].plot(kind="bar")
 plt.show()
 
 
+
+
+
+
+
+
+
+#--------------------------------------------
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, accuracy_score, recall_score, precision_score
+from tensorflow import keras
+from tensorflow.keras import layers
+from keras.models import load_model
+
+##################################################
+# 1. zadatak
+##################################################
+
+# učitavanje dataseta
+data = np.loadtxt('pima-indians-diabetes.csv', delimiter=',', skiprows=9)
+# a)
+print(f'Broj mjerenja: {len(data)}')
+
+# b)
+data_df = pd.DataFrame(data)
+print(f'Broj dupliciranih: {data_df.duplicated().sum()}')
+print(f'Broj izostalih: {data_df.isnull().sum()} ')
+data_df = data_df.drop_duplicates()
+data_df = data_df.dropna(axis=0) #trebalo je i izbacit sve 0 iz 
+data = data[data[:,5]!=0.0] #ovo je falilo, izbacivanje sve s 0.0 
+data_df = pd.DataFrame(data) #kreiranje ponovno data_df ali ovaj put s očišćenim podacima bez redaka s  0.0
+print(f'Broj preostalih: {len(data_df)}') 
+
+# c)
+plt.scatter(x=data[:, 7], y=data[:, 5])
+plt.title('Odnos dobi i BMI')
+plt.xlabel('Age(years)')
+plt.ylabel('BMI(weight in kg/(height in m)^2)')
+plt.show()
+
+
+# d)
+print(f'Minimalni : {data_df[5].min()}')
+print(f'Maksimalni : {data_df[5].max()}')
+print(f'Srednji : {data_df[5].mean()}')
+
+# e)
+print(f'Minimalni  (ima): {data_df[data_df[8]==1][5].min()}')
+print(f'Maksimalni BMI (ima): {data_df[data_df[8]==1][5].max()}')
+print(f'Srednji BMI: (ima) {data_df[data_df[8]==1][5].mean()}')
+
+print(f'Broj osoba s : {len(data_df[data_df[8]==1])}')
+
+print(f'Minimalni  (nema ): {data_df[data_df[8]==0][5].min()}')
+print(f'Maksimalni  (nema ): {data_df[data_df[8]==0][5].max()}')
+print(f'Srednji : (nema ) {data_df[data_df[8]==0][5].mean()}')
+
+
