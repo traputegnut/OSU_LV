@@ -115,7 +115,7 @@ from keras.models import load_model
 ##################################################
 
 # učitavanje dataseta
-data = np.loadtxt('pima-indians-diabetes.csv', delimiter=',', skiprows=9)
+data = np.loadtxt('file.csv', delimiter=',', skiprows=9)
 # a)
 print(f'Broj mjerenja: {len(data)}')
 
