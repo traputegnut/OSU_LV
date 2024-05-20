@@ -239,7 +239,7 @@ history = model.fit(X_train, y_train, batch_size=10,
 # d)
 model.save('Model/')
 
-# e)
+# e) evaluacija
 model = load_model('Model/')
 score = model.evaluate(X_test, y_test, verbose=0)
 for i in range(len(model.metrics_names)):
